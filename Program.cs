@@ -1,3 +1,8 @@
+using ApiUniversity.Data;
+using Microsoft.EntityFrameworkCore;
+
+SeedData.Init();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
