@@ -15,10 +15,10 @@ public class StudentController : ControllerBase
 
     // GET: api/student
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+    public async Task<ActionResult<IEnumerable<StudentDTO>>> GetStudents()
     {
         // Get Students and related lists
-        var students = _context.Students;
+        var students = _context.Students.Select(x => new StudentDTO(x));
         return await students.ToListAsync();
     }
 
@@ -39,20 +39,23 @@ public class StudentController : ControllerBase
 
     // POST: api/student
     [HttpPost]
-    public async Task<ActionResult<Student>> PostStudent(Student student)
+    public async Task<ActionResult<Student>> PostStudent(StudentDTO studentDTO)
     {
+        Student student = new(studentDTO);
         _context.Students.Add(student);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetStudent), new { id = student.Id }, student);
+        return CreatedAtAction(nameof(GetStudent), new { id = studentDTO.Id }, studentDTO);
     }
 
     // PUT: api/student/2
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutStudent(int id, Student student)
+    public async Task<IActionResult> PutStudent(int id, StudentDTO studentDTO)
     {
-        if (id != student.Id)
+        if (id != studentDTO.Id)
             return BadRequest();
+
+        Student student = new(studentDTO);
 
         _context.Entry(student).State = EntityState.Modified;
 
