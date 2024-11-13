@@ -1,4 +1,3 @@
-using ApiUniversity.Data;
 using ApiUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
